@@ -4,7 +4,7 @@
     nativeBuildInputs = with pkgs.buildPackages; [ 
     	git
     	gnumake
-    	python3
+    	python39
     ];
 
     LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
