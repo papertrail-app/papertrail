@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/papertrail-app/papertrail">
-    <img src="" height="96">
+    <img src="https://raw.githubusercontent.com/papertrail-app/design-assets/main/icons/papertrail-logo-temp.svg" height="96">
     <h1 align="center">PaperTrail</h1>
   </a>
 </p>
