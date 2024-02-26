@@ -11,4 +11,4 @@ def say_hello_py(x):
 say_hello_py('Python World!')
 eel.say_hello_js('Python World!')   # Call a Javascript function
 
-eel.start('papertrail.html')             # Start (this blocks and enters loop)
+eel.start('application.html')             # Start (this blocks and enters loop)

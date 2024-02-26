@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Defines the character set to be used-->
+   	<meta charset="utf-8">
+   	
+  	<!-- Indicates that the page supports light and dark colorschemes, and that light is preferred -->
+  	<meta name="color-scheme" content="light dark">
+
+  	<!-- Page Title -->
+    <title>PaperTrail</title>
+
+    <!-- Imports stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- Include eel.js -->
+    <script type="text/javascript" src="/eel.js"></script>
+    <script type="text/javascript">
+      eel.expose(say_hello_js); // Expose this function to Python
+      function say_hello_js(x) {
+        console.log("Hello from " + x);
+      }
+
+      say_hello_js("Javascript World!");
+      eel.say_hello_py("Javascript World!"); // Call a Python function
+    </script>
+  </head>
+
+  <body>
+  	<cell span="8">
+    	<h1>PaperTrail</h1>
+    </cell>
+    
+  	<cell span="4">
+  		<h2>Encrypt</h2>
+  		<fieldset id="encrypt">
+  			<div>
+  				<label for="enc_file">Select a file to encrypt:</label><br/>
+				<input type="file" id="enc_file" name="file_to_encrypt">
+			</div>
+			<br/>
+
+			<div>
+				<label for="enc_pass">Encryption Password <small>(12 characters minimum)</small>:</label><br/>
+				<input type="password" id="enc_pass" name="encryption_password" minlength="12" required />
+			</div>
+			<br/>
+			<br/>
+			
+			<input type="submit" value="Encrypt" />
+  		</fieldset>
+  	</cell>
+  	
+    <cell span="4">
+    	<h2>Decrypt</h2>
+    	<fieldset id="decrypt">
+  			<div>
+  				<label for="dec_file">Select a scan to decrypt:</label><br/>
+				<input type="file" id="dec_file" name="scan_to_decrypt">
+			</div>
+			<br/>
+
+			<div>
+				<label for="dec_pass">Decryption Password:</label><br/>
+				<input type="password" id="dec_pass" name="decryption_password" minlength="12" required />
+			</div>
+			<br/>
+			<br/>
+			
+			<input type="submit" value="Decrypt" />
+    	</fieldset>
+   	</cell>
+  </body>
+</html>
