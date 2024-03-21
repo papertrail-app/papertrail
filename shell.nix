@@ -4,7 +4,8 @@
     nativeBuildInputs = with pkgs.buildPackages; [ 
     	git
     	gnumake
-    	python39
+    	python310
+      python310Packages.opencv4
     ];
 
     LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
