@@ -8,17 +8,21 @@ class PaperTrailDriver:
     def __init__():
         pass
 
-    def encrypt(self, password: str, data: bytes): # TODO: Add return type annotation
+    def encrypt(self, password: str, data_path: str, dest_path: str):
         key = __derive_key(password)
+        # TODO: Read data file from given path into bytes
         pt_doc = PaperTrailDocument(key=key, data=data)
         pt_doc.encrypt()
-        return pt_doc.get_document()
+        document = pt_doc.get_document()
+        # TODO: Save document to given dest_path
 
-    def decrypt(self, password: str, document) -> bytes: # TODO: Add type for document
+    def decrypt(self, password: str, document_path: str, dest_path: str):
         key = __derive_key(password)
+        # TODO: Read dpcument from given path into something
         pt_doc = PaperTrailDocument(key=key, document=document)
         pt_doc.decrypt()
-        return pt_doc.get_data()
+        data = pt_doc.get_data()
+        # TODO: Save data to given dest_path
 
     def __derive_key(self, password:str) -> bytes:
         kdf = PBKDF2HMAC(
