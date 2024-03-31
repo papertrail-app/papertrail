@@ -11,14 +11,17 @@ import friendlywords
 CHUNK_SIZE = 895
 
 class PaperTrailDocument:
-    def __init__(self, key: bytes, data = None, document = ""):
+    def __init__(self, key: bytes, data = None, document = "", designator = ""):
         # Initialize a document with data and Fernet key
 
         # Initial assignments
         self.document = document
         self.data = data
         self.key = key
-        self.designator = friendlywords.generate('poc', separator='-')
+        if designator == "":
+            self.designator = friendlywords.generate('poc', separator='-')
+        else:
+            self.designator = designator
         
     def encrypt(self):
         # Encrypt data using key into a document and store in self
@@ -32,8 +35,7 @@ class PaperTrailDocument:
         pdf = self.__gen_pdf(enc_chunks=enc_chunks)
         
         # Save and return
-        #self.document = f"./{papertrail_designator}.pdf")
-        self.document = "pdftest.pdf"
+        self.document = f"./papertrail_{self.designator}.pdf"
         pdf.output(self.document)
         
     def decrypt(self):
