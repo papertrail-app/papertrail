@@ -4,10 +4,8 @@
     nativeBuildInputs = with pkgs.buildPackages; [ 
     	git
     	gnumake
-      wkhtmltopdf
     	python310
       python310Packages.opencv4
-      python310Packages.pdfkit
     ];
 
     LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
