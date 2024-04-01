@@ -1,10 +1,12 @@
 from cryptography.fernet import Fernet
 from papertraildocument import PaperTrailDocument
+import friendlywords
 
 my_key = Fernet.generate_key()
 
 #string = b"x" * 2143 * 3
-string = b"hello world"
+#string = b"hello world"
+string = bytes(friendlywords.generate('o'*1000, separator=' '), 'utf-8')
 print(len(string))
 
 designator = "test"

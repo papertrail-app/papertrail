@@ -3,25 +3,20 @@ from PIL import Image
 from fpdf import FPDF, Align
 from pdf2image import convert_from_path
 import qrcode
-import cv2
-import numpy
+from pyzbar.pyzbar import decode
 import friendlywords
 
-#CHUNK_SIZE = 2143
-CHUNK_SIZE = 895
+CHUNK_SIZE = 2143
 
 class PaperTrailDocument:
-    def __init__(self, key: bytes, data = None, document = "", designator = ""):
+    def __init__(self, key: bytes, designator: str, document: str, data: bytes = None):
         # Initialize a document with data and Fernet key
 
         # Initial assignments
         self.document = document
         self.data = data
         self.key = key
-        if designator == "":
-            self.designator = friendlywords.generate('poc', separator='-')
-        else:
-            self.designator = designator
+        self.designator = designator
         
     def encrypt(self):
         # Encrypt data using key into a document and store in self
@@ -29,13 +24,11 @@ class PaperTrailDocument:
         # Encrypt data into Fernet tokens
         chunks = self.__split_data(self.data)
         enc_chunks = [self.__enc_chunk(chunk) for chunk in chunks]
-        print(enc_chunks)
 
         # Generate the pdf
         pdf = self.__gen_pdf(enc_chunks=enc_chunks)
         
         # Save and return
-        self.document = f"./papertrail_{self.designator}.pdf"
         pdf.output(self.document)
         
     def decrypt(self):
@@ -43,7 +36,6 @@ class PaperTrailDocument:
         
         images = self.__get_images()
         chunks = [self.__read_qr_from_image(image) for image in images]
-        print(chunks)
         dec_chunks = [self.__dec_chunk(chunk) for chunk in chunks]
         self.data = b"".join(dec_chunks)
 
@@ -51,7 +43,7 @@ class PaperTrailDocument:
         # Get data if present, if not return an empty bytestring
         return self.data
 
-    def get_document(self):
+    def get_document(self) -> str:
         # Get document if present, if not return some sort of null response
         return self.document
 
@@ -62,7 +54,7 @@ class PaperTrailDocument:
     def __gen_qr(self, enc_data: bytes) -> Image:
         qr = qrcode.QRCode(
             version = 40,
-            error_correction = qrcode.constants.ERROR_CORRECT_H,
+            error_correction = qrcode.constants.ERROR_CORRECT_L,
             box_size = 3,
             border = 4,
         )
@@ -127,19 +119,8 @@ class PaperTrailDocument:
         images = convert_from_path(self.document)
         return images
 
-    def __pillow_to_opencv(self, pil_image: Image) -> numpy.ndarray:
-        # Convert to a NumPy array
-        intermediate_image = numpy.array(pil_image)
-        # Reverse the color space
-        opencv_image = cv2.cvtColor(intermediate_image, cv2.COLOR_RGB2BGR)
-        return opencv_image
-
     def __read_qr_from_image(self, image: Image) -> bytes:
-        enc_data = ''
-        cv_image = self.__pillow_to_opencv(image)
-        while enc_data == '':
-            detector = cv2.QRCodeDetector()
-            enc_data, bbox, straight_qrcode = detector.detectAndDecode(cv_image)
-        print(enc_data)
+        decoded_qrs = decode(image)
+        enc_data = decoded_qrs[0].data
         return enc_data
     
