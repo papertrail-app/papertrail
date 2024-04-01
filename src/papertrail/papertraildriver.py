@@ -1,6 +1,7 @@
 import base64
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+import friendlywords as fw
 
 from papertrail.papertraildocument import PaperTrailDocument
 
@@ -16,10 +17,9 @@ class PaperTrailDriver:
         pt_doc = PaperTrailDocument(key=key, designator="drivertest", document=dest_path, data=data)
         pt_doc.encrypt()
         document = pt_doc.get_document()
-        # TODO: Save document to given dest_path
         return dest_path
 
-    def decrypt(self, password: str, document_path: str, dest_path: str):
+    def decrypt(self, password: str, document_path: str, dest_path: str) -> str:
         key = self.__derive_key(password)
         # TODO: extract designator from document_path just for completeness
         pt_doc = PaperTrailDocument(key=key, designator="", document=document_path)
@@ -29,6 +29,9 @@ class PaperTrailDriver:
             f.write(data)
             f.close()
         return dest_path
+
+    def gen_designator(self) -> str:
+        return fw.generate('poc', separator='-').title()
 
     def __derive_key(self, password: str) -> bytes:
         kdf = PBKDF2HMAC(
