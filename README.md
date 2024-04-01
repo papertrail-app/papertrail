@@ -19,9 +19,9 @@
 
 <!-- Instructions on how to try the application out -->
 
-## Technologies
+## System Dependencies
 
-<!-- Technologies app is built with -->
+In addition to the Python modules outlined in `pyproject.toml`, in order to use this module you'll need `zbar` and `poppler` installed and available in your `PATH`.
 
 ## License
 
