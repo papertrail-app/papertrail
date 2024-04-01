@@ -2,7 +2,7 @@ import base64
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
-from papertraildocument import PaperTrailDocument
+from papertrail.papertraildocument import PaperTrailDocument
 
 class PaperTrailDriver:
     def __init__(self):
