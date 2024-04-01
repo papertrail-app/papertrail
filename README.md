@@ -1,7 +1,7 @@
 <p align="center">
   <a href="https://github.com/papertrail-app/papertrail">
     <img src="https://avatars.githubusercontent.com/u/161344602?s=200&v=4" height="96">
-    <h1 align="center">PaperTrail</h1>
+    <h1 align="center">PaperTrail (Python Module)</h1>
   </a>
 </p>
 
